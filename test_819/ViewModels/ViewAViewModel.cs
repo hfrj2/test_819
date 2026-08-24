@@ -12,7 +12,7 @@ namespace test_819.ViewModels
     {
 
 
-        private readonly IEventAggregator _eventAggregator;
+        private readonly IEventAggregator _eventAggregator ;
         private string _inputMessage;
 
 
