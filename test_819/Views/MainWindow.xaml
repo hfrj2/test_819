@@ -1,0 +1,35 @@
+﻿<Window
+    x:Class="test_819.Views.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:prism="http://prismlibrary.com/"
+    Title="{Binding Title}"
+    Width="525"
+    Height="350"
+    prism:ViewModelLocator.AutoWireViewModel="True">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition />
+
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <Button
+                Margin="5"
+                Background="ForestGreen"
+                Command="{Binding NavigateCommand}"
+                CommandParameter="ViewA"
+                Content="模块A" />
+            <Button
+                Margin="5"
+                Background="ForestGreen"
+                Command="{Binding NavigateCommand}"
+                CommandParameter="ViewB"
+                Content="模块B" />
+
+
+        </StackPanel>
+        <Rectangle Grid.Row="1" Fill="Black" />
+        <ContentControl Grid.Row="1" prism:RegionManager.RegionName="ContentRegion" />
+    </Grid>
+</Window>
