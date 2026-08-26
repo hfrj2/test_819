@@ -48,11 +48,11 @@ namespace test_819.Services
             // 初始化播放列表
             _playlist = new List<string>
             {
-                "pack://application:,,,/Audio/song1.mp3",
-                "pack://application:,,,/Audio/song2.mp3",
-                "pack://application:,,,/Audio/song3.mp3",
-                "pack://application:,,,/Audio/song4.mp3",
-                "pack://application:,,,/Audio/song5.mp3"
+                "D:\\Projects\\test_819\\test_819\\Audio\\GEM_ONLY.mp3",
+                "D:\\Projects\\test_819\\test_819\\Audio\\song1.mp3",
+                "D:\\Projects\\test_819\\test_819\\Audio\\song1.mp3",
+                "D:\\Projects\\test_819\\test_819\\Audio\\song1.mp3",
+                "D:\\Projects\\test_819\\test_819\\Audio\\song1.mp3"
             };
         }
 
@@ -61,7 +61,7 @@ namespace test_819.Services
             var tracks = new List<TrackInfo>();
             var trackNames = new[]
             {
-                "歌曲1 - 歌手A",
+                "GEM - ONLY",
                 "歌曲2 - 歌手B",
                 "歌曲3 - 歌手C",
                 "歌曲4 - 歌手D",
@@ -173,7 +173,7 @@ namespace test_819.Services
 
         private string GetTrackName(int index)
         {
-            var names = new[] { "歌曲1 - 歌手A", "歌曲2 - 歌手B", "歌曲3 - 歌手C", "歌曲4 - 歌手D", "歌曲5 - 歌手E" };
+            var names = new[] { "GEM - ONLY", "歌曲2 - 歌手B", "歌曲3 - 歌手C", "歌曲4 - 歌手D", "歌曲5 - 歌手E" };
             return names[index % names.Length];
         }
 
