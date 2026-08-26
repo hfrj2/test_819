@@ -64,7 +64,8 @@
     </UserControl.Resources>
 
     <Grid>
-        <Grid x:Name="CarouselGrid">
+        <Border Background="#f5f5dc" CornerRadius="30">
+        <Grid x:Name="CarouselGrid" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
@@ -210,5 +211,6 @@
                            Margin="15,0,0,0"/>
             </StackPanel>
         </Grid>
+        </Border>
     </Grid>
 </UserControl>
