@@ -12,9 +12,7 @@
     <UserControl.Resources>
 
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Style/CommonDictionary.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
+        
       
         <!-- 圆角按钮样式 -->
         <Style x:Key="MusicButtonStyle" TargetType="Button">

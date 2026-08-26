@@ -9,12 +9,15 @@
     <converters:InvertedBoolToVisibilityConverter x:Key="InvertedBoolToVisibilityConverter"/>
     <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
 
+    <!-- 注册转换器 -->
+    <converters:IndicatorStyleConverter x:Key="IndicatorStyleConverter"/>
+
     <!-- FontAwesome 字体 -->
     <FontFamily x:Key="FontAwesome">pack://application:,,,/Fonts/#FontAwesome</FontFamily>
 
     <!-- 瘦金体 -->
     <FontFamily x:Key="ZiHunShouJingTi">
-        pack://application:,,,/Fonts/#字魂瘦金体(商用需授权)
+        D:\Projects\test_819\test_819\Fonts\字魂瘦金体(商用需授权).ttf
     </FontFamily>
 
     <!-- 按钮样式 -->

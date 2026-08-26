@@ -27,10 +27,11 @@
             <StackPanel>
                 <TextBlock
                     HorizontalAlignment="Center"
-                  
+                  FontFamily="FangSong"
                     FontSize="24"
                     Foreground="#8B7355"
                     Text="菜单"
+                    FontWeight="SemiBold"
                    />
                 <Button
                     MinHeight="30"

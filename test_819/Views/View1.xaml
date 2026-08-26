@@ -11,8 +11,7 @@
              d:Width="1920">
 
     <UserControl.Resources>
-        <!-- 注册转换器 -->
-        <converters:IndicatorStyleConverter x:Key="IndicatorStyleConverter"/>
+    
 
         <!-- 圆角按钮样式 -->
         <Style x:Key="CarouselButtonStyle" TargetType="Button">
