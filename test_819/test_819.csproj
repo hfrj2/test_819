@@ -5,6 +5,11 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Audio\song1.mp3" />
+    <None Remove="Audio\song2.mp3" />
+    <None Remove="Audio\song3.mp3" />
+    <None Remove="Audio\song4.mp3" />
+    <None Remove="Audio\song5.mp3" />
     <None Remove="Fonts\SongHuiZongShouJinJiaCuBan-2.ttf" />
     <None Remove="Fonts\字魂瘦金体%28商用需授权%29.ttf" />
     <None Remove="Images\slide1.png" />
@@ -20,6 +25,21 @@
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Audio\song1.mp3">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Audio\song2.mp3">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Audio\song3.mp3">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Audio\song4.mp3">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Audio\song5.mp3">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Fonts\FontAwesome.otf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>

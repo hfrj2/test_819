@@ -2,8 +2,247 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:prism="http://prismlibrary.com/"             
-             prism:ViewModelLocator.AutoWireViewModel="True">
-    <Grid>
-        <TextBlock Text="菜单2" Foreground="ForestGreen" HorizontalAlignment="Center" FontSize="24" FontFamily="Calibri Light"/>
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:Height="1080"
+             d:Width="1920">
+
+    <UserControl.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Style/CommonDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+      
+        <!-- 圆角按钮样式 -->
+        <Style x:Key="MusicButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#3498DB"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Width" Value="50"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="25">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#5DADE2"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#2874A6"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- 播放列表项样式 -->
+        <Style x:Key="TrackItemStyle" TargetType="Border">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Padding" Value="15,10"/>
+            <Setter Property="CornerRadius" Value="5"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid Background="#F5F5DC">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- 顶部标题 -->
+        <Border Grid.Row="0" Background="#D4C4A8" Padding="15">
+            <TextBlock Text="🎵 音乐播放器" 
+                       FontSize="24" 
+                       FontWeight="Bold"
+                       Foreground="#3C2F2F"
+                       FontFamily="Microsoft YaHei"
+                       HorizontalAlignment="Center"/>
+        </Border>
+
+        <!-- 播放列表 -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="20">
+            <ItemsControl ItemsSource="{Binding Tracks}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Style="{StaticResource TrackItemStyle}"
+                                Background="{Binding IsCurrent, Converter={StaticResource TrackBackgroundConverter}}"
+                                MouseLeftButtonUp="TrackItem_Click">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- 播放状态图标 -->
+                                <TextBlock Grid.Column="0" 
+                                           FontFamily="{StaticResource FontAwesome}"
+                                           Text="{Binding IsPlaying, Converter={StaticResource PlayIconConverter}}"
+                                           FontSize="16"
+                                           Foreground="#3498DB"
+                                           Margin="0,0,15,0"
+                                           VerticalAlignment="Center"/>
+
+                                <!-- 歌曲名称 -->
+                                <TextBlock Grid.Column="1" 
+                                           Text="{Binding Name}"
+                                           FontSize="16"
+                                           FontFamily="Microsoft YaHei"
+                                           Foreground="{Binding IsCurrent, Converter={StaticResource TrackForegroundConverter}}"
+                                           VerticalAlignment="Center"/>
+
+                                <!-- 当前播放标记 -->
+                                <TextBlock Grid.Column="2" 
+                                           FontFamily="{StaticResource FontAwesome}"
+                                           Text="&#xf04b;"
+                                           FontSize="14"
+                                           Foreground="#27AE60"
+                                           Visibility="{Binding IsPlaying, Converter={StaticResource BoolToVisibilityConverter}}"
+                                           VerticalAlignment="Center"/>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <!-- 底部控制栏 -->
+        <Border Grid.Row="2" 
+                Background="#2C3E50" 
+                Padding="20,15">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- 进度条 -->
+                <Grid Grid.Row="0" Margin="0,0,0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" 
+                               Text="{Binding CurrentTime}"
+                               Foreground="#BDC3C7"
+                               FontSize="12"
+                               FontFamily="Consolas"
+                               Margin="0,0,10,0"
+                               VerticalAlignment="Center"/>
+
+                    <Slider Grid.Column="1" 
+                            Value="{Binding Progress, Mode=TwoWay}"
+                            Minimum="0"
+                            Maximum="100"
+                            Foreground="#3498DB"
+                            Background="#BDC3C7"
+                            Thumb.DragStarted="Slider_DragStarted"
+                            Thumb.DragCompleted="Slider_DragCompleted"/>
+
+                    <TextBlock Grid.Column="2" 
+                               Text="{Binding TotalTime}"
+                               Foreground="#BDC3C7"
+                               FontSize="12"
+                               FontFamily="Consolas"
+                               Margin="10,0,0,0"
+                               VerticalAlignment="Center"/>
+                </Grid>
+
+                <!-- 控制按钮 -->
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- 左侧：当前歌曲信息 -->
+                    <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock Text="{Binding CurrentTrack.Name, FallbackValue='未播放'}"
+                                   Foreground="White"
+                                   FontSize="14"
+                                   FontFamily="Microsoft YaHei"/>
+                    </StackPanel>
+
+                    <!-- 中间：控制按钮 -->
+                    <StackPanel Grid.Column="1" 
+                                Orientation="Horizontal" 
+                                HorizontalAlignment="Center">
+                        <!-- 上一首 -->
+                        <Button Style="{StaticResource MusicButtonStyle}"
+                                Command="{Binding PreviousCommand}"
+                                Margin="5">
+                            <TextBlock FontFamily="{StaticResource FontAwesome}" 
+                                       Text="&#xf048;" 
+                                       FontSize="18"/>
+                        </Button>
+
+                        <!-- 暂停 -->
+                        <Button Style="{StaticResource MusicButtonStyle}"
+                                Command="{Binding PauseCommand}"
+                                Margin="5"
+                                Visibility="{Binding IsPlaying, Converter={StaticResource BoolToVisibilityConverter}}">
+                            <TextBlock FontFamily="{StaticResource FontAwesome}" 
+                                       Text="&#xf04c;" 
+                                       FontSize="18"/>
+                        </Button>
+
+                        <!-- 播放 -->
+                        <Button Style="{StaticResource MusicButtonStyle}"
+                                Command="{Binding PlayCommand}"
+                                Margin="5"
+                                Visibility="{Binding IsPlaying, Converter={StaticResource InvertedBoolToVisibilityConverter}}">
+                            <TextBlock FontFamily="{StaticResource FontAwesome}" 
+                                       Text="&#xf04b;" 
+                                       FontSize="18"/>
+                        </Button>
+
+                        <!-- 下一首 -->
+                        <Button Style="{StaticResource MusicButtonStyle}"
+                                Command="{Binding NextCommand}"
+                                Margin="5">
+                            <TextBlock FontFamily="{StaticResource FontAwesome}" 
+                                       Text="&#xf04e;" 
+                                       FontSize="18"/>
+                        </Button>
+                    </StackPanel>
+
+                    <!-- 右侧：音量控制 -->
+                    <StackPanel Grid.Column="2" 
+                                Orientation="Horizontal" 
+                                VerticalAlignment="Center"
+                                Margin="10,0,0,0">
+                        <TextBlock FontFamily="{StaticResource FontAwesome}" 
+                                   Text="&#xf028;" 
+                                   Foreground="#BDC3C7"
+                                   FontSize="16"
+                                   Margin="0,0,10,0"
+                                   VerticalAlignment="Center"/>
+
+                        <Slider Width="100"
+                                Value="{Binding Volume, Mode=TwoWay}"
+                                Minimum="0"
+                                Maximum="100"
+                                Foreground="#3498DB"
+                                Background="#BDC3C7"/>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </Border>
     </Grid>
 </UserControl>
