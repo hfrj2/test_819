@@ -18,7 +18,8 @@ namespace test_819
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-         
+         containerRegistry.RegisterForNavigation<View1>();
+         containerRegistry.RegisterForNavigation<View2>();
         }
 
        

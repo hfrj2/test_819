@@ -5,9 +5,40 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Fonts\SongHuiZongShouJinJiaCuBan-2.ttf" />
+    <None Remove="Fonts\字魂瘦金体%28商用需授权%29.ttf" />
+    <None Remove="Images\slide1.png" />
+    <None Remove="Images\slide2.png" />
+    <None Remove="Images\slide3.png" />
+    <None Remove="Images\slider4.jpg" />
+    <None Remove="Images\slider5.jpg" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Prism.DryIoc" Version="8.1.97" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Style\" />
+    <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Fonts\FontAwesome.otf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Fonts\SongHuiZongShouJinJiaCuBan-2.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Fonts\字魂瘦金体(商用需授权).ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\slide1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\slide2.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\slide3.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\slider4.jpg" />
+    <Resource Include="Images\slider5.jpg" />
   </ItemGroup>
 </Project>

@@ -1,0 +1,9 @@
+﻿<UserControl x:Class="test_819.Views.View2"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:prism="http://prismlibrary.com/"             
+             prism:ViewModelLocator.AutoWireViewModel="True">
+    <Grid>
+        <TextBlock Text="菜单2" Foreground="ForestGreen" HorizontalAlignment="Center" FontSize="24" FontFamily="Calibri Light"/>
+    </Grid>
+</UserControl>

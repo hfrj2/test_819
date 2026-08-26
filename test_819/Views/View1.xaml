@@ -1,0 +1,214 @@
+﻿<UserControl x:Class="test_819.Views.View1"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:prism="http://prismlibrary.com/"             
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:converters="clr-namespace:test_819.Converters"
+             mc:Ignorable="d"
+             d:Height="1080"
+             d:Width="1920">
+
+    <UserControl.Resources>
+        <!-- 注册转换器 -->
+        <converters:IndicatorStyleConverter x:Key="IndicatorStyleConverter"/>
+
+        <!-- 圆角按钮样式 -->
+        <Style x:Key="CarouselButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#FFFFFF"/>
+            <Setter Property="Foreground" Value="#2C3E50"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Width" Value="50"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="25"
+                                BorderThickness="0">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#3498DB"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#2980B9"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- 指示器样式 -->
+        <Style x:Key="IndicatorStyle" TargetType="Ellipse">
+            <Setter Property="Width" Value="12"/>
+            <Setter Property="Height" Value="12"/>
+            <Setter Property="Fill" Value="#BDC3C7"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+
+        <Style x:Key="ActiveIndicatorStyle" TargetType="Ellipse" BasedOn="{StaticResource IndicatorStyle}">
+            <Setter Property="Fill" Value="#3498DB"/>
+            <Setter Property="Width" Value="16"/>
+            <Setter Property="Height" Value="16"/>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid x:Name="CarouselGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- 轮播内容 -->
+            <Border Grid.Row="0" 
+                    CornerRadius="10" 
+                    Margin="40"
+                    Background="#2C3E50">
+                <Grid x:Name="SlideContainer">
+                    <!-- 图片显示区域 -->
+                    <Image x:Name="SlideImage" 
+                           Stretch="UniformToFill"
+                           RenderTransformOrigin="0.5,0.5">
+                        <Image.RenderTransform>
+                            <ScaleTransform x:Name="ImageScale"/>
+                        </Image.RenderTransform>
+                    </Image>
+
+                    <!-- 渐变遮罩 -->
+                    <Border>
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                <GradientStop Color="Transparent" Offset="0.6"/>
+                                <GradientStop Color="#80000000" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                    </Border>
+
+                    <!-- 内容叠加层 -->
+                    <StackPanel VerticalAlignment="Bottom" 
+                                HorizontalAlignment="Left"
+                                Margin="50,0,50,60">
+                        <TextBlock x:Name="SlideTitle" 
+                                   Text="轮播图标题" 
+                                   FontSize="36" 
+                                   FontWeight="Bold"
+                                   Foreground="White"
+                                   FontFamily="Microsoft YaHei"
+                                   Margin="0,0,0,10"/>
+                        <TextBlock x:Name="SlideDescription" 
+                                   Text="这是轮播图的描述文字" 
+                                   FontSize="18" 
+                                   Foreground="#E0E0E0"
+                                   FontFamily="Microsoft YaHei"/>
+                    </StackPanel>
+
+                    <!-- 左右切换按钮 -->
+                    <Button x:Name="PrevButton"
+                            Style="{StaticResource CarouselButtonStyle}"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Margin="20,0,0,0">
+                        <TextBlock FontFamily="{StaticResource FontAwesome}" 
+                                   Text="&#xf104;" 
+                                   FontSize="24"/>
+                    </Button>
+
+                    <Button x:Name="NextButton"
+                            Style="{StaticResource CarouselButtonStyle}"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            Margin="0,0,20,0">
+                        <TextBlock FontFamily="{StaticResource FontAwesome}" 
+                                   Text="&#xf105;" 
+                                   FontSize="24"/>
+                    </Button>
+                </Grid>
+            </Border>
+
+            <!-- 底部控制栏 -->
+            <StackPanel Grid.Row="1" 
+                        Orientation="Horizontal" 
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Margin="0,15,0,15">
+
+                <ItemsControl x:Name="IndicatorControl" 
+                              HorizontalAlignment="Center">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Ellipse Style="{Binding IsActive, Converter={StaticResource IndicatorStyleConverter}}"
+                                     MouseLeftButtonUp="Indicator_Click"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <Rectangle Width="2" 
+                           Height="30" 
+                           Fill="#BDC3C7" 
+                           Margin="20,0"/>
+
+                <Button x:Name="PlayPauseButton"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Cursor="Hand"
+                        Click="PlayPauseButton_Click"
+                        Margin="0,0,10,0">
+                    <TextBlock x:Name="PlayPauseIcon"
+                               FontFamily="{StaticResource FontAwesome}" 
+                               Text="&#xf04c;" 
+                               FontSize="20"
+                               Foreground="#34495E"/>
+                </Button>
+
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="PrevIndicatorButton"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Cursor="Hand"
+                            Click="PrevIndicatorButton_Click"
+                            Margin="0,0,5,0">
+                        <TextBlock FontFamily="{StaticResource FontAwesome}" 
+                                   Text="&#xf053;" 
+                                   FontSize="16"
+                                   Foreground="#34495E"/>
+                    </Button>
+
+                    <Button x:Name="NextIndicatorButton"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Cursor="Hand"
+                            Click="NextIndicatorButton_Click"
+                            Margin="5,0,0,0">
+                        <TextBlock FontFamily="{StaticResource FontAwesome}" 
+                                   Text="&#xf054;" 
+                                   FontSize="16"
+                                   Foreground="#34495E"/>
+                    </Button>
+                </StackPanel>
+
+                <TextBlock x:Name="SlideProgress"
+                           Text="1 / 5"
+                           FontSize="14"
+                           Foreground="#7F8C8D"
+                           FontFamily="Microsoft YaHei"
+                           Margin="15,0,0,0"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

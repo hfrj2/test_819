@@ -5,5 +5,14 @@
     xmlns:local="clr-namespace:test_819"
 
     xmlns:prism="http://prismlibrary.com/">
-    <Application.Resources />
+    <Application.Resources >
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Style/CommonDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+            
+
+    </Application.Resources>
+
 </prism:PrismApplication>
